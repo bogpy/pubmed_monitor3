@@ -1,0 +1,52 @@
+name: Send Article
+
+on:
+  schedule:
+    - cron: '0 9 * * *'   
+
+  workflow_dispatch:
+
+jobs:
+  send-article:
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Send first article
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+        run: python send_next_article.py
+
+      - name: Send second article
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+        run: python send_next_article.py
+
+      - name: Commit queue changes
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+
+          git add article_queue.json
+
+          git diff --cached --quiet || git commit -m "Update queue"
+
+          git push
