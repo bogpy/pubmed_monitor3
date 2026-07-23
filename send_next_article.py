@@ -4,7 +4,7 @@ import requests
 from queue_operations import load_queue, save_queue
 
 BOT_TOKEN = os.environ["BOT_TOKEN"]
-CHANNEL_ID = "@AH_Radar"
+CHANNEL_ID = "@estetika_radar"
 
 queue = load_queue()
 

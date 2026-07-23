@@ -6,10 +6,12 @@ def get_latest_pmids():
 
     query = '''
 (
-    "arterial hypertension"[Title/Abstract]
-    OR hypertension[Title/Abstract]
-    OR perindopril[Title/Abstract]
-    OR telmisartan[Title/Abstract]
+    "botulinum toxin"[Title/Abstract]
+OR "hyaluronic acid"[Title/Abstract]
+OR laser[Title/Abstract]
+OR phototherapy[Title/Abstract]
+OR radiofrequency[Title/Abstract]
+OR ultrasound[Title/Abstract]
 )
 '''
 
